@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import logging
+
 DJ_PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(DJ_PROJECT_DIR)
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'brownetapi',
     'rest_framework.authtoken',
+    'corsheaders'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +52,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 )
 
 # GETTING-STARTED: change 'myproject' to your project name:
@@ -66,6 +71,23 @@ DATABASES = {
         # GETTING-STARTED: change 'db.sqlite3' to your sqlite3 database:
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+#Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
 }
 
 # Internationalization
@@ -101,3 +123,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+#Configuracion CORS
+CORS_ORIGIN_ALLOW_ALL = True

@@ -1,0 +1,27 @@
+<div ng-controller="View1Ctrl">
+    <div class="page-header">
+    	<h2>Usuarios:</h2>
+    	<input type="text" class="form-control" ng-model="nameFilter" placeholder="Filtrar por Nombre..."/>
+    </div>
+    <div class="row">
+		<div class="col-md-6">
+	    	<table class="table">
+	    		<thead>
+	    			<tr>
+	    				<th>Nombre</th>
+	    				<th>Apellido</th>
+	    				<th>Edad</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<tr ng-repeat="user in usuarios | filter: nameFilter">
+						<td>{{user.nombre}}</td>
+						<td>{{user.apellido}}</td>
+	    				<td>{{user.edad}} a&ntilde;os</td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+	    </div>
+    </div>
+    <div><a class="btn btn-sm btn-default" href="#/new">Agregar un nuevo usuario</a></div>
+</div>

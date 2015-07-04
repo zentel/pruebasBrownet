@@ -3,6 +3,6 @@ from . import views
 from rest_framework import routers
 
 urlpatterns = [
-	url(r'^usuarios/$',views.ListUsers.as_view()),
+	url(r'^usuarios/$',views.Users.as_view()),
 	url(r'^tokens/$', views.token),
 ]

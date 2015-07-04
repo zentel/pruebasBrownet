@@ -6,7 +6,7 @@ from .serializers import UsuarioSerializer
 from rest_framework.response import Response
 from django.contrib.auth import authenticate,login
 from rest_framework.authtoken.models import Token
-from rest_framework import authentication,permissions
+from rest_framework import authentication,permissions, status
 
 # Create your views here.
 def index(request):
@@ -35,13 +35,28 @@ def token(request):
 	else:
 		return HttpResponse('Usuario invalido')
 
-class ListUsers(APIView):
+class Users(APIView):
 	authentication_classes = (authentication.TokenAuthentication,)
 	permission_classes = (permissions.IsAuthenticated,)
 
-
+	#Consulta de usuarios
 	def get(self, request, format=None):
-		#	API endpoint
 		queryset = Usuario.objects.all()
 		serializer = UsuarioSerializer(queryset, many=True)
 		return Response(serializer.data)
+
+	#Alta de un usuario
+	def post(self, request):
+		serializer = UsuarioSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data,status=status.HTTP_201_CREATED)
+		return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
+
+	#TODO: para modificar un usuario
+	def put(self,request):
+		return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
+
+	#TODO: para eliminar un usuario
+	def delete(self,request):
+		return Response(serializer.errors.HTTP_400_BAD_REQUEST)
